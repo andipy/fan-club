@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-// import components
-import NavIcon from './NavIcon';
-
 // import graphic assets
 import BackArrow from '../assets/icons/backArrow.svg';
 import UserProfile from '../assets/icons/userProfile.svg';
@@ -28,11 +25,16 @@ const Nav = () => {
     return (
         <nav className={`px-6 mx-0 py-4 flex items-center justify-between fixed w-full z-10 ${navTransparent ? "" : "bg-zinc-900"}`}>
             <div onClick={() => navigate(-1)}>
-                <NavIcon src={BackArrow} alt={'< BACK'} />
+                <img src={BackArrow} alt="< BACK" className="py-2 px-2 rounded-full" />
             </div>
             <div className="flex items-center gap-2">
-                <NavIcon src={NotificationsEnabled} alt={'SMS'} />
-                <NavIcon src={UserProfile} alt={'PROFILE'} />
+                <img src={NotificationsEnabled} alt="SMS" className="py-2 px-2 rounded-full" />
+                <img
+                    src={UserProfile}
+                    alt="PROFILE"
+                    className="py-2 px-2 rounded-full"
+                    onClick={()=> navigate("/post")}
+                />
             </div>
         </nav>
     )

@@ -130,7 +130,7 @@ const Signup = () => {
             created_at: serverTimestamp(),
             updated_at: null,
             deactivated_at: null
-          });
+        });
     }
 
     // function register a new user with firebase email and pwd provider, and redirect to

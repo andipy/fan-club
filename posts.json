@@ -1,0 +1,105 @@
+[
+    {
+        "id": "post_1",
+        "type": "POST",
+        "post_author": {
+            "id": "user_1",
+            "type": "USER",
+            "role": "ARTIST",
+            "email": "vegas@gmail.com",
+            "username": "Vegas Jones"
+        },        
+        "time": "13:32",
+        "content": "lorem ipsum lorem ipsum lorem ipsum",
+        "comments": [
+            {
+                "id": "comment_1_1",
+                "type": "COMMENT",
+                "comment_author": {
+                    "id": "user_2",
+                    "type": "USER",
+                    "role": "FAN",
+                    "email": "dani@gmail.com",
+                    "username": "dani_love"
+                },
+                "comment": "love youuuuuUUUUUUUU",
+                "time": "14:01"
+            },{
+                "id": "comment_1_2",
+                "type": "COMMENT",
+                "comment_author": {
+                    "id": "user_4",
+                    "type": "USER",
+                    "role": "FAN",
+                    "email": "fra@gmail.com",
+                    "username": "mienere"
+                },
+                "comment": "sono mienere",
+                "time": "14:03"
+            },{
+                "id": "comment_1_3",
+                "type": "COMMENT",
+                "comment_author": {
+                    "id": "user_2",
+                    "type": "USER",
+                    "role": "FAN",
+                    "email": "dani@gmail.com",
+                    "username": "dani_love"
+                },
+                "comment": "dono dani",
+                "time": "14:37"
+            }
+        ]
+    },{
+        "id": "post_2",
+        "type": "POST",
+        "post_author": {
+            "id": "user_3",
+            "type": "USER",
+            "role": "ARTIST",
+            "email": "ultimo@gmail.com",
+            "username": "Ultimo"
+        },
+        "time": "13:36",
+        "content": "sono ultimo, post dell'artista!",
+        "comments": [
+            {
+                "id": "comment_2_1",
+                "type": "COMMENT",
+                "comment_author": {
+                    "id": "user_2",
+                    "type": "USER",
+                    "role": "FAN",
+                    "email": "dani@gmail.com",
+                    "username": "dani_love"
+                },
+                "comment": "love youuuuuUUUUUUUU",
+                "time": "14:01"
+            },{
+                "id": "comment_2_2",
+                "type": "COMMENT",
+                "comment_author": {
+                    "id": "user_4",
+                    "type": "USER",
+                    "role": "FAN",
+                    "email": "fra@gmail.com",
+                    "username": "mienere"
+                },
+                "comment": "sono mienere",
+                "time": "14:03"
+            },{
+                "id": "comment_2_3",
+                "type": "COMMENT",
+                "comment_author": {
+                    "id": "user_2",
+                    "type": "USER",
+                    "role": "FAN",
+                    "email": "dani@gmail.com",
+                    "username": "dani_love"
+                },
+                "comment": "dono dani",
+                "time": "14:37"
+            }
+        ]
+    }
+]

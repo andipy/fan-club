@@ -1,11 +1,10 @@
 import { collection, query, where, onSnapshot, getDocs, orderBy, doc, deleteDoc } from "firebase/firestore";
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { db, auth } from '../services/firebase';
-import { signOut } from "firebase/auth";
+import { db } from '../services/firebase';
+
 
 import Nav from "../components/Nav";
-import Button from "../components/Button";
 import Message from "../components/Message";
 import Arrow from "../assets/icons/go-arrow.svg";
 
@@ -62,42 +61,11 @@ const Posts = () => {
         await deleteDoc(docRef);
     }
 
-    const handleSignOut = (e) => {
-        e.preventDefault();  
-        signOut(auth)
-        .then(() => {
-            // Sign-out successful.
-            setCurrentUser(null);
-            navigate('/login');
-        }).catch((error) => {
-            // An error happened.
-            console.log('An error happened');
-        });
-    };
-
-    // object with the data about the logout button
-    const buttonLogout = {
-        label: 'Logout',
-        style: 'w-full border-solid border-2 border-violet-600 text-violet-400 mt-3 py-3 rounded-lg font-semibold',
-        disabled: false
-    }
-
     return (
         <>
             <Nav />
             
-            <div className="px-6 mx-0 pt-20 text-zinc-200">
-
-                {isArtist && 
-                    <div className="mb-8">
-                        <button
-                            onClick={()=>navigate('/post')}
-                            className="w-full py-3 px-6 bg-violet-600 rounded-md text-white"
-                        >
-                            + Create new post
-                        </button>
-                    </div>
-                }
+            <div className="px-6 mx-0 pt-20 pb-10 text-zinc-200">
 
                 {allPosts?.map((post) => {
                     return (
@@ -105,7 +73,8 @@ const Posts = () => {
                                 key={post.id}
                                 content={post.content}
                                 avatar={post.avatar}
-                                username={currentArtist.username ? currentArtist.username : currentArtist.email} 
+                                username={currentArtist.username ? currentArtist.username : currentArtist.email}
+                                media={post.media}
                                 time={(() => {
                                     var date = new Date(post.created_at * 1000);
                                     var hours = date.getHours();
@@ -144,14 +113,6 @@ const Posts = () => {
                         </Message>
                     )
                 })}
-
-                <div className="mt-8 mb-8">
-                    <div className="text-zinc-200 text-xl font-semibold">You are {currentUser.email}</div>
-                    <Button
-                        button={buttonLogout}
-                        onClickFunction={handleSignOut}
-                    />
-                </div>
             </div>
         </>
     )

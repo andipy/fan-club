@@ -1,0 +1,27 @@
+[
+    {
+        "id": "user_1",
+        "type": "USER",
+        "role": "ARTIST",
+        "email": "vegas@gmail.com",
+        "username": "Vegas Jones"
+    },{
+        "id": "user_2",
+        "type": "USER",
+        "role": "FAN",
+        "email": "dani@gmail.com",
+        "username": "dani_love"
+    },{
+        "id": "user_3",
+        "type": "USER",
+        "role": "ARTIST",
+        "email": "ultimo@gmail.com",
+        "username": "Ultimo"
+    },{
+        "id": "user_4",
+        "type": "USER",
+        "role": "FAN",
+        "email": "fra@gmail.com",
+        "username": "mienere"
+    }
+]
