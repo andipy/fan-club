@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { db, auth } from '../services/firebase';
-import { signOut } from "firebase/auth";
+import { db } from '../services/firebase';
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 
-import Button from "../components/Button";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 

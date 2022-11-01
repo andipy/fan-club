@@ -19,6 +19,20 @@ const Posts = () => {
     const { state } = useLocation();
 
     const [currentArtist, setCurrentArtist] = useState(state);
+    const [hasPermission, setHasPermission] = useState(false);
+    const userHasPermission = async () => {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+            if ( doc.data().id == currentUser.uid ) {
+                if ( doc.data().role == "ARTIST" && currentArtist.id == currentUser.uid ) {
+                    setHasPermission(true);
+                }
+            }
+        });        
+    }
+    useEffect(() =>{
+        userHasPermission();
+    },[]);
 
     const [allPosts, setAllPosts] = useState([]);
     const getPosts = async () => {
@@ -32,9 +46,9 @@ const Posts = () => {
                     const commentsSize = await getDocs(collectionRef);
                     setAllPosts((prev) => [...prev, {
                         ...doc.data(),
-                            id: doc.id,
-                            comment_number: commentsSize.size
-                    }])
+                        id: doc.id,
+                        comment_number: commentsSize.size
+                    }]);
                 }
                 countComments();
             })
@@ -43,22 +57,9 @@ const Posts = () => {
     }
     useEffect(() => {
         getPosts();
-    }, [currentArtist]);
+    }, []);
 
-    const [isArtist, setIsArtist] = useState(false);
-    const userIsArtist = async () => {
-        const querySnapshot = await getDocs(collection(db, "users"));
-        querySnapshot.forEach((doc) => {
-            if ( doc.data().id == currentUser.uid ) {
-                if ( doc.data().role == "ARTIST" ) {
-                    setIsArtist(true);
-                }
-            }
-        });        
-    }
-    useEffect(() =>{
-        userIsArtist();
-    },[]);
+    
 
     const deletePost = async (id) => {
         const docRef = doc(db, "posts", id);
@@ -88,7 +89,7 @@ const Posts = () => {
                                 })()}
                             >
 
-                            {isArtist && 
+                            {hasPermission && 
                                 <div className="flex items-center gap-6 mt-2">
                                     <button
                                         className="flex items-center text-red-200"

@@ -63,7 +63,10 @@ const ThreadDetails = () => {
             await addDoc(collectionRef, {
                 comment: comment,
                 comment_author: currentUser.uid,
-                created_at: serverTimestamp()
+                created_at: serverTimestamp(),
+                post_author: state.post_author,
+                post_id: state.id, 
+                updated_at: null
             });
             setComment("");
         }
