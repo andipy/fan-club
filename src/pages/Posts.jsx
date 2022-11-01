@@ -23,16 +23,21 @@ const Posts = () => {
     const [allPosts, setAllPosts] = useState([]);
     const getPosts = async () => {
         const collectionRef = collection(db, "posts");
-        const q = query(collectionRef, where("post_author", "==", currentArtist.id))
+        const q = query(collectionRef, where("post_author", "==", currentArtist.id));
+
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            setAllPosts(querySnapshot.docs.map((doc) => {
-                return (
-                    {
+            querySnapshot.docs.map((doc) => {
+                const countComments = async () => {
+                    const collectionRef = collection(db, "posts", doc.id, "comments");
+                    const commentsSize = await getDocs(collectionRef);
+                    setAllPosts((prev) => [...prev, {
                         ...doc.data(),
-                        id: doc.id
-                    }
-                )
-            }));
+                            id: doc.id,
+                            comment_number: commentsSize.size
+                    }])
+                }
+                countComments();
+            })
         })
         return unsubscribe;
     }
@@ -44,7 +49,6 @@ const Posts = () => {
     const userIsArtist = async () => {
         const querySnapshot = await getDocs(collection(db, "users"));
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             if ( doc.data().id == currentUser.uid ) {
                 if ( doc.data().role == "ARTIST" ) {
                     setIsArtist(true);
@@ -105,9 +109,7 @@ const Posts = () => {
                                 onClick={() => navigate(`/${currentArtist.id}/${post.id}`, {state: {...post}})}
                                 className="flex items-center justify-between w-full border-2 border-violet-600 w-full rounded-full mt-4 pl-4 pr-2 py-2"
                             >
-                                <button>
-                                    {post.comments?.length ? post.comments?.length : '0'} comments
-                                </button>
+                                <button>{post.comment_number} comments</button>
                                 <img src={Arrow} alt="GO ->" className="bg-violet-600 rounded-full" />
                             </div>
                         </Message>

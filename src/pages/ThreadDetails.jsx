@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, arrayUnion, serverTimestamp, addDoc, orderBy } from "firebase/firestore";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -16,10 +16,18 @@ const ThreadDetails = () => {
 
     const [allComments, setAllComments] = useState([]);
     const getComments = async () => {
-        const docRef = doc(db, "posts", state.id);
-        const unsubscribe = onSnapshot(docRef, (querySnapshot) => {
-            setAllComments(querySnapshot.data().comments)
-        });
+        const collectionRef = collection(db, "posts", state.id, "comments");
+        const q = query(collectionRef, orderBy("created_at", "asc"))
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            setAllComments(querySnapshot.docs.map((doc) => {
+                return (
+                    {
+                        ...doc.data(),
+                        id: doc.id
+                    }
+                )
+            }));
+        })
         return unsubscribe;
     }
 
@@ -51,13 +59,11 @@ const ThreadDetails = () => {
     const handleComment = async (e) => {
         if ( comment ) {
             e.preventDefault();
-            const docRef = doc(db, "posts", state.id);
-            await updateDoc(docRef, {
-                comments: arrayUnion({
-                    comment,
-                    id: (() => Math.floor(Math.random()*1000000))(),
-                    comment_author: currentUser.uid
-                })
+            const collectionRef = collection(db, "posts", state.id, "comments");
+            await addDoc(collectionRef, {
+                comment: comment,
+                comment_author: currentUser.uid,
+                created_at: serverTimestamp()
             });
             setComment("");
         }
@@ -67,7 +73,7 @@ const ThreadDetails = () => {
         getCurrentArtist();
         getUsers();
         getComments();
-    },[state]);
+    },[]);
 
     return (
         <>
