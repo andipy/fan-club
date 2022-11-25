@@ -39,7 +39,7 @@ const Artists = () => {
                 return (
                     <div
                         className="p-8 bg-zinc-800 rounded-md mb-2"
-                        onClick={() => navigate(`/${artist.id}`, { state: artist })}
+                        onClick={() => navigate(`/${artist.uid}`, { state: artist })}
                         key={artist.id}
                     >
                         <p>{artist.username ? artist.username : artist.email}</p>

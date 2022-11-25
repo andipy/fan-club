@@ -81,7 +81,7 @@ const Post = () => {
     const [isArtist, setIsArtist] = useState(false);
     const checkIsArtist = async () => {
         const collectionRef = collection(db, "users");
-        const q = query(collectionRef, where("id", "==", currentUser.uid))
+        const q = query(collectionRef, where("uid", "==", currentUser.uid))
         const querySnap = await getDocs(q);
         querySnap.forEach((doc) => {
             setIsArtist(() => {

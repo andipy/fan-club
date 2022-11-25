@@ -23,8 +23,8 @@ const Posts = () => {
     const userHasPermission = async () => {
         const querySnapshot = await getDocs(collection(db, "users"));
         querySnapshot.forEach((doc) => {
-            if ( doc.data().id == currentUser.uid ) {
-                if ( doc.data().role == "ARTIST" && currentArtist.id == currentUser.uid ) {
+            if ( doc.data().uid == currentUser.uid ) {
+                if ( doc.data().role == "ARTIST" && currentArtist.uid == currentUser.uid ) {
                     setHasPermission(true);
                 }
             }
@@ -37,7 +37,7 @@ const Posts = () => {
     const [allPosts, setAllPosts] = useState([]);
     const getPosts = async () => {
         const collectionRef = collection(db, "posts");
-        const q = query(collectionRef, where("post_author", "==", currentArtist.id));
+        const q = query(collectionRef, where("post_author", "==", currentArtist.uid));
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             querySnapshot.docs.map((doc) => {
